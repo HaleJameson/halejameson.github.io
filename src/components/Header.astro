@@ -9,7 +9,7 @@ const links = [
 
 <header>
   <div class="container bar">
-    <a class="brand" href={`${base}/`}>{SITE.shortName}</a>
+    <a class="brand" href={`${base}/`}>{SITE.name}</a>
     <nav>
       {links.map((l) => <a href={l.href}>{l.label}</a>)}
       <button id="theme-toggle" type="button" aria-label="Switch to light theme" title="Toggle day / night"></button>
