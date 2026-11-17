@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Atmosphere from '../components/Atmosphere.astro';
 import '../styles/global.css';
 import { SITE } from '../site';
 
@@ -11,6 +12,14 @@ interface Props {
 const { title, description = SITE.tagline } = Astro.props;
 const fullTitle = title ? `${title} | ${SITE.name}` : `${SITE.name} | ${SITE.role}`;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: SITE.name,
+  jobTitle: SITE.role,
+  url: SITE.url,
+  sameAs: [SITE.github, SITE.linkedin],
+};
 ---
 
 <!doctype html>
@@ -23,9 +32,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <meta name="theme-color" content="#07150e" />
+    <script is:inline>
+      try { if (localStorage.getItem('theme') === 'light') document.documentElement.dataset.theme = 'light'; } catch (e) {}
+    </script>
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
   </head>
   <body>
+    <Atmosphere />
     <Header />
     <main class="container">
       <slot />

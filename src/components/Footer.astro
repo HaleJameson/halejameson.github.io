@@ -8,13 +8,20 @@ import { SITE } from '../site';
     <span class="links">
       <a href={SITE.github}>GitHub</a>
       <a href={SITE.linkedin}>LinkedIn</a>
-      <a href={`mailto:${SITE.email}`}>Email</a>
     </span>
   </div>
 </footer>
 
 <style>
-  footer { border-top: 1px solid var(--border); padding: 1.5rem 0; font-size: 0.9rem; }
+  footer {
+    --text: #dde5da; --muted: #8fa192; --accent: #a8873c; --accent-strong: #c2a052;
+    background-color: #0c0805;
+    background-image: var(--wood), linear-gradient(0deg, rgba(255,255,255,0.03), rgba(0,0,0,0.3));
+    border-top: 1px solid var(--accent);
+    box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.55);
+    padding: 1.5rem 0;
+    font-size: 0.9rem;
+  }
   .container { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
   .links { display: flex; gap: 1rem; }
 </style>

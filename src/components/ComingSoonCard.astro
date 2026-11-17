@@ -1,0 +1,31 @@
+---
+interface Props {
+  label?: string;
+}
+const { label = 'Project in the works' } = Astro.props;
+---
+
+<article class="card" aria-label="Coming soon">
+  <span class="badge">Coming soon</span>
+  <h3>{label}</h3>
+  <p class="muted">Something new is being built here. Check back soon.</p>
+</article>
+
+<style>
+  .card {
+    background: var(--surface);
+    border: 1px dashed var(--accent);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    min-height: 9rem;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  }
+  .badge {
+    display: inline-block; margin-bottom: 0.6rem; padding: 0.1rem 0.65rem; border-radius: 999px;
+    font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+    border: 1px solid var(--accent); color: var(--accent);
+  }
+  h3 { margin: 0 0 0.25rem; font-size: 1.15rem; color: var(--text); }
+  p { margin: 0.25rem 0; }
+</style>

@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Layout title="Page not found" description="This page could not be found.">
+  <section class="lost">
+    <p class="code" aria-hidden="true">404</p>
+    <h1>Lost in the woods</h1>
+    <p class="muted">The trail ends here. The page you were looking for has moved, or never existed.</p>
+    <p class="actions">
+      <a class="button primary" href={`${base}/`}>Back to the clearing</a>
+      <a class="button" href={`${base}/projects`}>Browse projects</a>
+    </p>
+  </section>
+</Layout>
+
+<style>
+  .lost { text-align: center; padding: 4rem 0 3rem; }
+  .code {
+    margin: 0; line-height: 1; font-size: clamp(5rem, 22vw, 11rem); font-weight: 700; letter-spacing: 0.04em;
+    font-family: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+    background: linear-gradient(180deg, var(--accent-strong), var(--accent) 60%, transparent 125%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .lost p { margin: 0.5rem auto; max-width: 30rem; }
+  .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem; margin-top: 1.75rem !important; }
+</style>

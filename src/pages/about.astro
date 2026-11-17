@@ -1,25 +1,72 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { SITE } from '../site';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <Layout title="About">
   <h1>About</h1>
   <div class="prose">
     <p>
-      Write 2–3 short paragraphs here: what you work on, what you're good at, and what kind of role
-      you're looking for. Mention your degree or background if relevant.
+      I'm {SITE.shortName}, a software engineer and AI engineer. I build backend services, developer tooling
+      and Kubernetes infrastructure, and I'm now going deeper into machine learning.
     </p>
+
+    <h2>Outside of work</h2>
+    <div class="outside">
+      <ul>
+        <li><strong>Soccer:</strong> I love both playing and watching. My two teams are Atlanta United and the U.S. national teams.</li>
+        <li><strong>Reading:</strong> Steinbeck is my favorite, especially <em>The Grapes of Wrath</em> and <em>The Winter of Our Discontent</em>, along with <em>Stoner</em> by John Williams. I'm also a fan of dystopian novels and a bit of Stephen King.</li>
+        <li><strong>Video games:</strong> a good way to unwind.</li>
+        <li><strong>Weightlifting:</strong> a steady part of my routine.</li>
+        <li><strong>My cat:</strong> see image</li>
+      </ul>
+      <figure>
+        <img src={`${base}${SITE.aboutImage.src}`} alt={SITE.aboutImage.alt} width="400" height="500" loading="lazy" />
+      </figure>
+    </div>
+
+    <h2>Education</h2>
+    <ul>
+      <li><strong>M.S. in Artificial Intelligence</strong>, University of Georgia (expected December 2027)</li>
+      <li>
+        <strong>B.S. in Computer Science</strong> and <strong>B.A. in Cognitive Science</strong>,
+        University of Georgia (August 2020)
+      </li>
+    </ul>
+
+    <h2>Experience</h2>
+    <ul>
+      <li>Software Engineer II, NCR Voyix</li>
+      <li>Software Engineer, Backend, FlightAware</li>
+      <li>Computer Scientist, U.S. Department of Defense</li>
+      <li>Teaching Assistant, University of Georgia</li>
+    </ul>
+
     <h2>Skills</h2>
     <ul>
-      <li><strong>Languages:</strong> Python, TypeScript, SQL</li>
-      <li><strong>ML:</strong> PyTorch, scikit-learn, Hugging Face</li>
-      <li><strong>Engineering:</strong> Git, Docker, CI/CD, REST APIs</li>
+      <li><strong>Languages:</strong> Python, C++, Go, Rust, Java, TypeScript, SQL</li>
+      <li><strong>AI / ML:</strong> PyTorch, TensorFlow, deep learning, computer vision</li>
+      <li><strong>Infrastructure:</strong> Kubernetes, Docker, Nix, Flux, Linux, GCP (IAM), Grafana, observability (logs and metrics)</li>
+      <li><strong>Engineering:</strong> Git, CI/CD (GitHub Actions, Jenkins), backend services and APIs, PostgreSQL, database migrations, testing, technical documentation</li>
     </ul>
     <h2>Get in touch</h2>
     <p>
-      The best way to reach me is <a href={`mailto:${SITE.email}`}>{SITE.email}</a>, or find me on
-      <a href={SITE.linkedin}>LinkedIn</a>.
+      You can find me on <a href={SITE.linkedin}>LinkedIn</a> and <a href={SITE.github}>GitHub</a>.
     </p>
   </div>
 </Layout>
+
+<style>
+  .outside { display: grid; grid-template-columns: 1fr; gap: 1.5rem; align-items: start; }
+  .outside ul { margin: 0; }
+  .outside figure { margin: 0; justify-self: center; width: min(100%, 260px); }
+  .outside img {
+    display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover;
+    border: 1px solid var(--accent); border-radius: var(--radius); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  }
+  @media (min-width: 700px) {
+    .outside { grid-template-columns: 1fr 240px; gap: 2rem; }
+    .outside figure { justify-self: end; width: 100%; }
+  }
+</style>
