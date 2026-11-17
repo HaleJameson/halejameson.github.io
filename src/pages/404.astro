@@ -3,11 +3,11 @@ import Layout from '../layouts/Layout.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
-<Layout title="Page not found" description="This page could not be found.">
+<Layout title="Page not found" description="This page could not be found">
   <section class="lost">
     <p class="code" aria-hidden="true">404</p>
     <h1>Lost in the woods</h1>
-    <p class="muted">The trail ends here. The page you were looking for has moved, or never existed.</p>
+    <p class="muted">The trail ends here. The page you were looking for has moved, or never existed</p>
     <p class="actions">
       <a class="button primary" href={`${base}/`}>Back to the clearing</a>
       <a class="button" href={`${base}/projects`}>Browse projects</a>
