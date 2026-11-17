@@ -1,0 +1,35 @@
+---
+interface Props {
+  slug: string;
+  title: string;
+  summary: string;
+  tags: string[];
+  repo?: string;
+  demo?: string;
+}
+const { slug, title, summary, tags, repo, demo } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<article class="card">
+  <h3><a href={`${base}/projects/${slug}`}>{title}</a></h3>
+  <p class="muted">{summary}</p>
+  <ul class="tags">{tags.map((t) => <li>{t}</li>)}</ul>
+  <p class="links">
+    {repo && <a href={repo}>Code</a>}
+    {demo && <a href={demo}>Live demo</a>}
+  </p>
+</article>
+
+<style>
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+  }
+  h3 { margin: 0 0 0.25rem; font-size: 1.15rem; }
+  h3 a { color: var(--text); }
+  p { margin: 0.25rem 0; }
+  .links { display: flex; gap: 1rem; margin-top: 0.75rem; font-size: 0.9rem; }
+</style>

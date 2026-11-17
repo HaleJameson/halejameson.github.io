@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { SITE } from '../site';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const featured = (await getCollection('projects'))
+  .filter((p) => p.data.featured)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<Layout>
+  <section class="hero">
+    <p class="muted">Hi, I'm</p>
+    <h1>{SITE.name}</h1>
+    <p class="role">{SITE.role}</p>
+    <p class="muted tagline">{SITE.tagline}</p>
+    <p class="actions">
+      <a class="button primary" href={`${base}/projects`}>View projects</a>
+      <a class="button" href={SITE.resume}>Resume</a>
+      <a class="button" href={SITE.github}>GitHub</a>
+      <a class="button" href={`mailto:${SITE.email}`}>Contact</a>
+    </p>
+  </section>
+
+  <h2>Featured projects</h2>
+  <div class="grid">
+    {featured.map((p) => <ProjectCard slug={p.id} {...p.data} />)}
+  </div>
+</Layout>
+
+<style>
+  .hero { padding: 2rem 0 1rem; }
+  .hero p { margin: 0.25rem 0; }
+  .role { font-size: 1.3rem; font-weight: 600; }
+  .tagline { max-width: 36rem; }
+  .actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem !important; }
+  .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+</style>

@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE } from '../site';
+---
+
+<Layout title="About">
+  <h1>About</h1>
+  <div class="prose">
+    <p>
+      Write 2–3 short paragraphs here: what you work on, what you're good at, and what kind of role
+      you're looking for. Mention your degree or background if relevant.
+    </p>
+    <h2>Skills</h2>
+    <ul>
+      <li><strong>Languages:</strong> Python, TypeScript, SQL</li>
+      <li><strong>ML:</strong> PyTorch, scikit-learn, Hugging Face</li>
+      <li><strong>Engineering:</strong> Git, Docker, CI/CD, REST APIs</li>
+    </ul>
+    <h2>Get in touch</h2>
+    <p>
+      The best way to reach me is <a href={`mailto:${SITE.email}`}>{SITE.email}</a>, or find me on
+      <a href={SITE.linkedin}>LinkedIn</a>.
+    </p>
+  </div>
+</Layout>

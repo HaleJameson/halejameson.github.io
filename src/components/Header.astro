@@ -1,0 +1,27 @@
+---
+import { SITE } from '../site';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const links = [
+  { href: `${base}/projects`, label: 'Projects' },
+  { href: `${base}/about`, label: 'About' },
+  { href: SITE.resume, label: 'Resume' },
+];
+---
+
+<header>
+  <div class="container bar">
+    <a class="brand" href={`${base}/`}>{SITE.name}</a>
+    <nav>
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </nav>
+  </div>
+</header>
+
+<style>
+  header { border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+  .bar { display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; padding-bottom: 1rem; }
+  .brand { font-weight: 700; color: var(--text); }
+  nav { display: flex; gap: 1.25rem; }
+  nav a { color: var(--muted); }
+  nav a:hover { color: var(--text); text-decoration: none; }
+</style>
