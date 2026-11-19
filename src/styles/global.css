@@ -1,56 +1,44 @@
-@import './textures.css';
-
 :root {
   color-scheme: dark;
-  --bg: #07150e;            /* deep pine: main background */
-  --surface: rgba(11, 30, 21, 0.72); /* translucent moss for cards */
-  --charcoal: #1a1d1b;      /* soft charcoal for header / footer */
-  --on-accent: #0b130e;     /* text on gold buttons */
-  --text: #dde5da;          /* pale lichen */
-  --muted: #8fa192;
-  --border: #1b3325;
-  --accent: #a8873c;        /* antique bronze-gold */
-  --accent-strong: #c2a052; /* hover gold */
-  --radius: 12px;
+  /* Palette: dark green page, dark grey surfaces and bars, dark gold accent */
+  --bg: #0c1611;            /* deep forest green */
+  --surface: #141c18;       /* dark green-grey for cards */
+  --bar: #0f1112;           /* near-black graphite for header / footer */
+  --bar-line: #26292c;
+  /* glossy sheen: soft top highlight, faint brushed lines and a diagonal glint (static) */
+  --bar-sheen:
+    linear-gradient(115deg, transparent 38%, rgba(255, 255, 255, 0.045) 48%, transparent 58%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.085) 0, rgba(255, 255, 255, 0.02) 50%, rgba(0, 0, 0, 0.22) 100%),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 3px);
+  --on-accent: #0f120f;     /* text on gold buttons */
+  --text: #e3e8e2;
+  --muted: #95a198;
+  --border: #25312b;
+  --accent: #b08d45;        /* dark gold */
+  --accent-strong: #c6a35a; /* hover gold */
+  --radius: 10px;
   --max: 860px;
-  /* scene colours (used by Atmosphere.astro) */
-  --bg-top: #040c08;
-  --bg-bot: #0a1c13;
-  --sky-light: rgba(190, 215, 205, 0.16);
-  --sky-glow: rgba(30, 70, 50, 0.35);
-  --tree-back: #0b2016;
-  --tree-mid: #07160e;
-  --tree-front: #030a06;
-  --vignette: rgba(0, 0, 0, 0.55);
-  --h1-shadow: 0 2px 24px rgba(0, 0, 0, 0.6);
 }
-/* Daylight theme, toggled from the header. Header/footer keep their dark wood. */
+/* Daylight theme, toggled from the header. The header and footer stay dark gray. */
+:root { --dots: rgba(255, 255, 255, 0.055); --glow: rgba(176, 141, 69, 0.07); }
 :root[data-theme='light'] {
   color-scheme: light;
-  --bg: #e6eee2;
-  --surface: rgba(255, 255, 255, 0.72);
-  --text: #1c2a21;
-  --muted: #4d6154;
-  --border: #bfd0bc;
+  --bg: #f3f2ed;
+  --surface: #ffffff;
+  --text: #1c2420;
+  --muted: #56625a;
+  --border: #dcd8cd;
   --accent: #7a5c19;
   --accent-strong: #5a430f;
   --on-accent: #ffffff;
-  --bg-top: #f3f0dc;
-  --bg-bot: #c9dcc6;
-  --sky-light: rgba(255, 233, 165, 0.6);
-  --sky-glow: rgba(255, 255, 255, 0.35);
-  --tree-back: #a9c2ab;
-  --tree-mid: #7d9d87;
-  --tree-front: #3f6150;
-  --vignette: rgba(30, 55, 40, 0.16);
-  --h1-shadow: none;
+  --dots: rgba(20, 30, 25, 0.07);
+  --glow: rgba(122, 92, 25, 0.06);
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
   margin: 0;
-  background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg) 55%, var(--bg-bot) 100%) fixed;
-  background-color: var(--bg);
+  background: var(--bg);
   color: var(--text);
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.65;
@@ -58,15 +46,23 @@ body {
   display: flex;
   flex-direction: column;
 }
+/* Texture: a faint dot grid with a soft gold glow at the top, fading out toward the edges. Static. */
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 40% at 50% 0%, var(--glow), transparent 70%),
+    radial-gradient(circle, var(--dots) 1px, transparent 1.2px) 0 0 / 22px 22px;
+  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 20%, #000 35%, transparent 100%);
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 20%, #000 35%, transparent 100%);
+}
 main { flex: 1; width: 100%; }
 a { color: var(--accent); text-decoration: none; }
-a:hover { color: var(--accent-strong); text-decoration: underline; }
+a:hover { color: var(--accent-strong); text-decoration: underline; text-underline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 ::selection { background: var(--accent); color: var(--on-accent); }
 h1, h2, h3 { line-height: 1.2; letter-spacing: -0.01em; font-family: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Times New Roman', serif; }
-header, main, footer { position: relative; z-index: 1; }
-h1 { text-shadow: var(--h1-shadow); }
-h1 { font-size: clamp(2rem, 5vw, 3rem); margin: 0 0 0.5rem; }
-h2 { font-size: 1.5rem; margin: 3rem 0 1rem; color: var(--accent); }
+h1 { font-size: clamp(2.2rem, 5vw, 3.1rem); margin: 0 0 0.5rem; }
+h2 { font-size: 1.35rem; margin: 3.25rem 0 1.1rem; color: var(--accent); }
 /* bronze rule under section headings */
 h2::after {
   content: ''; display: block; height: 1px; margin-top: 0.5rem;
@@ -78,7 +74,7 @@ main { padding-bottom: 4rem; }
 .button {
   display: inline-block;
   padding: 0.55rem 1.1rem;
-  border-radius: 999px;
+  border-radius: 8px;
   border: 1px solid var(--border);
   background: var(--surface);
   color: var(--text);
@@ -92,19 +88,22 @@ main { padding-bottom: 4rem; }
 .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0; margin: 0.75rem 0 0; list-style: none; }
 .tags li {
   font-size: 0.78rem;
-  padding: 0.15rem 0.6rem;
+  padding: 0.15rem 0.55rem;
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: 6px;
   color: var(--muted);
 }
 /* Smooth cross-fade between pages (supported browsers only; others just navigate normally). */
 @view-transition { navigation: auto; }
 ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.28s; }
-@keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-main { animation: rise 0.5s ease-out both; }
 @media (prefers-reduced-motion: reduce) {
-  main { animation: none; }
   ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
 }
+/* shared small pieces */
+.eyebrow { margin: 0 0 0.35rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+.chips { display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0; margin: 0; list-style: none; }
+.chips li { max-width: none; margin: 0 !important; padding: 0.2rem 0.65rem; font-size: 0.85rem; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 6px; }
+.prose p, .prose li { max-width: 68ch; }
+.prose li + li { margin-top: 0.35rem; }
 .prose img { max-width: 100%; border-radius: var(--radius); }
 .prose pre { overflow-x: auto; padding: 1rem; border-radius: 8px; }

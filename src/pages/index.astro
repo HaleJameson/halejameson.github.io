@@ -1,45 +1,61 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import ComingSoonCard from '../components/ComingSoonCard.astro';
 import { SITE } from '../site';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const glance = [
+  { label: 'Building', text: 'Backend services, developer tooling and Kubernetes infrastructure' },
+  { label: 'Studying', text: 'M.S. in Artificial Intelligence at the University of Georgia' },
+  { label: 'Off the clock', text: 'Soccer, reading, video games, weightlifting and time with my cat' },
+];
 ---
 
 <Layout>
   <section class="hero">
-    <p class="muted">Hi, I'm</p>
-    <h1>{SITE.shortName}</h1>
-    <p class="role">{SITE.role}</p>
-    <p class="muted tagline">{SITE.tagline}</p>
-    <p class="now"><span class="dot" aria-hidden="true"></span><strong>Now:</strong> {SITE.now}</p>
-    <p class="actions">
-      <a class="button primary" href={`${base}/projects`}>View projects</a>
-      <a class="button" href={SITE.github}>GitHub</a>
-      <a class="button" href={SITE.linkedin}>LinkedIn</a>
-    </p>
+    <div class="avatar" aria-hidden="true">JH</div>
+    <div>
+      <p class="eyebrow">{SITE.role}</p>
+      <h1>{SITE.shortName}</h1>
+      <p class="now"><span class="dot" aria-hidden="true"></span><strong>Now:</strong> {SITE.now}</p>
+      <p class="prev muted">Previously at NCR Voyix, FlightAware and the U.S. Department of Defense</p>
+      <p class="actions">
+        <a class="button primary" href={`${base}/about`}>About me</a>
+        <a class="button" href={SITE.github}>GitHub</a>
+        <a class="button" href={SITE.linkedin}>LinkedIn</a>
+      </p>
+    </div>
   </section>
 
-  <h2>Projects</h2>
-  <div class="grid">
-    <ComingSoonCard />
-    <ComingSoonCard />
+  <h2>At a glance</h2>
+  <div class="glance">
+    {glance.map((g) => (
+      <div class="tile">
+        <p class="eyebrow">{g.label}</p>
+        <p>{g.text}</p>
+      </div>
+    ))}
   </div>
 </Layout>
 
 <style>
-  .hero { padding: 2rem 0 1rem; }
+  .hero { display: grid; grid-template-columns: 1fr; gap: 1.5rem; padding: 3rem 0 0.5rem; align-items: start; }
+  .avatar {
+    width: 5.5rem; height: 5.5rem; border-radius: 50%; display: grid; place-items: center;
+    font: 700 1.9rem/1 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif; letter-spacing: 0.02em;
+    color: var(--accent-strong); background: var(--surface); border: 2px solid var(--accent);
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 14%, transparent);
+  }
+  @media (min-width: 700px) { .hero { grid-template-columns: auto 1fr; gap: 2rem; align-items: center; } }
   .hero p { margin: 0.25rem 0; }
-  .role { font-size: 1.3rem; font-weight: 600; }
-  .tagline { max-width: 36rem; }
   .now {
-    display: inline-flex; align-items: center; gap: 0.55rem; margin-top: 1rem !important; padding: 0.3rem 0.9rem;
-    font-size: 0.9rem; border: 1px solid var(--border); border-radius: 999px; background: var(--surface);
+    display: inline-flex; align-items: center; gap: 0.55rem; margin-top: 0.9rem !important; padding: 0.3rem 0.85rem;
+    font-size: 0.9rem; border: 1px solid var(--border); border-radius: 8px; background: var(--surface);
   }
   .now strong { color: var(--accent); font-weight: 600; }
-  .dot { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: #e2be5a; box-shadow: 0 0 8px #e2be5a; animation: blink 2.4s ease-in-out infinite; }
-  @keyframes blink { 50% { opacity: 0.35; } }
-  @media (prefers-reduced-motion: reduce) { .dot { animation: none; } }
+  .dot { width: 0.45rem; height: 0.45rem; border-radius: 50%; background: var(--accent); flex: none; }
+  .prev { font-size: 0.9rem; margin-top: 0.75rem !important; }
   .actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem !important; }
-  .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+  .glance { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+  .tile { padding: 1.1rem 1.25rem; background: var(--surface); border: 1px solid var(--border); border-left: 2px solid var(--accent); border-radius: var(--radius); }
+  .tile p:last-child { margin: 0; }
 </style>

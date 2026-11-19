@@ -1,55 +1,68 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { SITE } from '../site';
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const experience = [
+  { role: 'Software Engineer II', org: 'NCR Voyix' },
+  { role: 'Software Engineer, Backend', org: 'FlightAware' },
+  { role: 'Computer Scientist', org: 'U.S. Department of Defense' },
+  { role: 'Teaching Assistant', org: 'University of Georgia' },
+];
+const skills = [
+  { label: 'Languages', items: ['Python', 'C++', 'Go', 'Rust', 'Java', 'TypeScript', 'SQL'] },
+  { label: 'AI / ML', items: ['PyTorch', 'TensorFlow', 'Deep learning', 'Reinforcement learning', 'Evolutionary computation', 'LLMs', 'Agentic AI', 'Computer vision'] },
+  { label: 'Infrastructure', items: ['Kubernetes', 'Docker', 'Nix', 'Flux', 'Linux', 'AWS', 'GCP (IAM)', 'Grafana', 'Observability'] },
+  { label: 'Engineering', items: ['Git', 'CI/CD', 'GitHub Actions', 'Jenkins', 'Backend services and APIs', 'PostgreSQL', 'Database migrations', 'Testing', 'Technical documentation'] },
+];
 ---
 
 <Layout title="About">
-  <h1>About</h1>
+  <p class="eyebrow">About</p>
+  <h1>{SITE.shortName}</h1>
   <div class="prose">
-    <p>
+    <p class="lede">
       I'm {SITE.shortName}, a software engineer and AI engineer. I build backend services, developer tooling
       and Kubernetes infrastructure, and I'm now going deeper into machine learning
     </p>
 
-    <h2>Outside of work</h2>
-    <div class="outside">
-      <ul>
-        <li><strong>Soccer:</strong> I love both playing and watching. My two teams are Atlanta United and the U.S. national teams</li>
-        <li><strong>Reading:</strong> Steinbeck is my favorite, especially <em>The Grapes of Wrath</em> and <em>The Winter of Our Discontent</em>, along with <em>Stoner</em> by John Williams. I'm also a fan of dystopian novels and a bit of Stephen King</li>
-        <li><strong>Video games:</strong> a good way to unwind</li>
-        <li><strong>Weightlifting:</strong> a steady part of my routine</li>
-        <li><strong>My cat:</strong> see image</li>
-      </ul>
-      <figure>
-        <img src={`${base}${SITE.aboutImage.src}`} alt={SITE.aboutImage.alt} width="400" height="500" loading="lazy" />
-      </figure>
-    </div>
-
     <h2>Education</h2>
-    <ul>
-      <li><strong>M.S. in Artificial Intelligence</strong>, University of Georgia (expected December 2027)</li>
+    <ul class="edu">
       <li>
-        <strong>B.S. in Computer Science</strong> and <strong>B.A. in Cognitive Science</strong>,
-        University of Georgia (August 2020)
+        <strong>M.S. in Artificial Intelligence</strong>
+        <span class="muted">University of Georgia · expected December 2027</span>
+      </li>
+      <li>
+        <strong>B.S. in Computer Science</strong> and <strong>B.A. in Cognitive Science</strong>
+        <span class="muted">University of Georgia · August 2020</span>
       </li>
     </ul>
 
     <h2>Experience</h2>
-    <ul>
-      <li>Software Engineer II, NCR Voyix</li>
-      <li>Software Engineer, Backend, FlightAware</li>
-      <li>Computer Scientist, U.S. Department of Defense</li>
-      <li>Teaching Assistant, University of Georgia</li>
-    </ul>
+    <ol class="timeline">
+      {experience.map((e) => (
+        <li><strong>{e.role}</strong><span class="muted">{e.org}</span></li>
+      ))}
+    </ol>
 
     <h2>Skills</h2>
-    <ul>
-      <li><strong>Languages:</strong> Python, C++, Go, Rust, Java, TypeScript, SQL</li>
-      <li><strong>AI / ML:</strong> PyTorch, TensorFlow, deep learning, computer vision</li>
-      <li><strong>Infrastructure:</strong> Kubernetes, Docker, Nix, Flux, Linux, GCP (IAM), Grafana, observability (logs and metrics)</li>
-      <li><strong>Engineering:</strong> Git, CI/CD (GitHub Actions, Jenkins), backend services and APIs, PostgreSQL, database migrations, testing, technical documentation</li>
+    <div class="skills">
+      {skills.map((g) => (
+        <div class="group">
+          <p class="eyebrow">{g.label}</p>
+          <ul class="chips">{g.items.map((i) => <li>{i}</li>)}</ul>
+        </div>
+      ))}
+    </div>
+
+    <h2>Outside of work</h2>
+    <ul class="plain-list">
+        <li><strong>Soccer:</strong> I love both playing and watching. My two teams are Atlanta United and the U.S. national teams</li>
+        <li><strong>Reading:</strong> Steinbeck is my favorite, especially <em>The Grapes of Wrath</em> and <em>The Winter of Our Discontent</em>, along with <em>Stoner</em> by John Williams. I'm also a fan of dystopian novels and a bit of Stephen King</li>
+        <li><strong>Video games:</strong> a good way to unwind</li>
+        <li><strong>Weightlifting:</strong> a steady part of my routine</li>
+        <li><strong>My cat:</strong> I enjoy spending time with my cat</li>
     </ul>
+
     <h2>Get in touch</h2>
     <p>
       You can find me on <a href={SITE.linkedin}>LinkedIn</a> and <a href={SITE.github}>GitHub</a>
@@ -58,15 +71,19 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 </Layout>
 
 <style>
-  .outside { display: grid; grid-template-columns: 1fr; gap: 1.5rem; align-items: start; }
-  .outside ul { margin: 0; }
-  .outside figure { margin: 0; justify-self: center; width: min(100%, 260px); }
-  .outside img {
-    display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover;
-    border: 1px solid var(--accent); border-radius: var(--radius); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  .lede { font-size: 1.15rem; color: var(--text); }
+  ul.edu, ol.timeline, ul.plain-list { list-style: none; padding: 0; margin: 0; }
+  .edu li { display: flex; flex-direction: column; padding: 0.15rem 0 0.15rem 1rem; border-left: 2px solid var(--border); }
+  .edu li + li { margin-top: 1rem; }
+  .timeline { position: relative; margin-left: 0.35rem; border-left: 1px solid var(--border); }
+  .timeline li { position: relative; display: flex; flex-direction: column; padding: 0 0 1.25rem 1.5rem; margin: 0; }
+  .timeline li:last-child { padding-bottom: 0; }
+  .timeline li::before {
+    content: ''; position: absolute; left: -0.3rem; top: 0.45rem; width: 0.55rem; height: 0.55rem;
+    border-radius: 50%; background: var(--bg); border: 2px solid var(--accent);
   }
-  @media (min-width: 700px) {
-    .outside { grid-template-columns: 1fr 240px; gap: 2rem; }
-    .outside figure { justify-self: end; width: 100%; }
-  }
+  .skills { display: grid; gap: 1.25rem; }
+  .group .eyebrow { color: var(--muted); margin-bottom: 0.5rem; }
+  .plain-list li { position: relative; padding-left: 1.1rem; }
+  .plain-list li::before { content: ''; position: absolute; left: 0; top: 0.7em; width: 0.4rem; height: 0.4rem; border-radius: 50%; background: var(--accent); }
 </style>
